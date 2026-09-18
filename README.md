@@ -38,6 +38,8 @@ Email -> Proposal / Quarantine -> Verification -> Approval -> ERP Update Request
 
 The v0.3 operations surface currently provides read-only proposal and quarantine queues, audit exploration, and security-invariant status. It does not grant verification, approval, rejection, escalation, vendor-update, or payment authority.
 
+The v0.3 Phase 2 worklist surface adds role-restricted verification and approval queues, evidence and risk detail views, audit linkage, evidence requests, rejection, and escalation. All actions continue through the RC-1 transition engine and preserve requester/verifier/approver separation of duties.
+
 See [SECURITY_INVARIANTS.md](SECURITY_INVARIANTS.md) and [OPERATIONS.md](OPERATIONS.md).
 
 ## Local verification

@@ -5,8 +5,11 @@ from enum import Enum
 class ProposalState(str, Enum):
     DRAFT = "DRAFT"
     VERIFICATION_PENDING = "VERIFICATION_PENDING"
+    EVIDENCE_REQUESTED = "EVIDENCE_REQUESTED"
     VERIFIED = "VERIFIED"
     APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+    ESCALATED = "ESCALATED"
     ERP_UPDATE_REQUESTED = "ERP_UPDATE_REQUESTED"
 
 
@@ -36,6 +39,7 @@ class Proposal:
     approver_id: str | None = None
     last_hash: str = ""
     verified_snapshot: int | None = None
+    risk_score: int | None = None
 
 
 @dataclass(frozen=True)
