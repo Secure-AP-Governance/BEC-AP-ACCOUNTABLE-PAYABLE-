@@ -2,20 +2,33 @@
 
 Status: **PENDING**
 Go-live: **NOT AUTHORIZED**
-Repository baseline: `main` at `1a8844a`
+Repository baseline: `main` at `cd86f84`
 
 This tracker records external evidence and sign-offs. A passing repository test or CI run does not complete an external gate.
 
 ## Gate Tracker
 
-| Gate | Required evidence | Owner | Status | Sign-off | Date |
+| Gate | Required evidence | Owner | Team | Status | Sign-off | Date |
 |---|---|---|---|---|---|
-| Identity and access | SSO configuration, MFA test results, access review, privileged-account controls | Identity owner | PENDING |  |  |
-| Monitoring and operations | Dashboards, alert tests, routing confirmation, ownership and escalation matrix | Operations owner | PENDING |  |  |
-| Backup and recovery | Backup execution log, restore log, recovery drill, timing results | Recovery owner | PENDING |  |  |
-| Security review | Penetration test, threat model, RBAC review, audit-integrity review | Security owner | PENDING |  |  |
-| Business UAT | Approved results for all release-validation scenarios | Business owner | PENDING |  |  |
-| Final release review | Complete evidence package and release decision | Release owner | PENDING |  |  |
+| Identity and access | SSO configuration, MFA test results, access review, privileged-account controls | Jill Moore | IDENTITY-TEAM | PENDING REVIEW |  |  |
+| Monitoring and operations | Dashboards, alert tests, routing confirmation, ownership and escalation matrix | jasonnorman67889-code | OPERATIONS-TEAM | PENDING REVIEW |  |  |
+| Backup and recovery | Backup execution log, restore log, recovery drill, timing results | jasonnorman392-git | INFRASTRUCTURE-TEAM | PENDING REVIEW |  |  |
+| Security review | Penetration test, threat model, RBAC review, audit-integrity review | Daniel Wolff | SECURITY-TEAM | PENDING REVIEW |  |  |
+| Business UAT | Approved results for all release-validation scenarios | richardgnorman425-dev | BUSINESS-AP-OWNER | PENDING REVIEW |  |  |
+| Final release review | Complete evidence package and release decision | jason69000 | RELEASE-AUTHORITY | PENDING REVIEW |  |  |
+
+## Assigned Reviewers
+
+| Team | Owner | Members | Status |
+|---|---|---|---|
+| SECURITY-TEAM | Daniel Wolff | Daniel Wolff; Richard; Jason Norman | PENDING REVIEW |
+| IDENTITY-TEAM | Jill Moore | Jill Moore; Jason Norman | PENDING REVIEW |
+| INFRASTRUCTURE-TEAM | jasonnorman392-git | jasonnorman392-git; Jason Norman | PENDING REVIEW |
+| OPERATIONS-TEAM | jasonnorman67889-code | jasonnorman67889-code; Jason Norman | PENDING REVIEW |
+| BUSINESS-AP-OWNER | richardgnorman425-dev | richardgnorman425-dev; Jason Norman | PENDING REVIEW |
+| RELEASE-AUTHORITY | jason69000 | jason69000; Jason Norman | PENDING REVIEW |
+
+Each owner must record one decision on the corresponding approval issue: **APPROVED**, **REJECTED**, or **NEEDS REMEDIATION**. A gate is approved only when the owner records the decision, date, and comments.
 
 ## Identity and Access
 
