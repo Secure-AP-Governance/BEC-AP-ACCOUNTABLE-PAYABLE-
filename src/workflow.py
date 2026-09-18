@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from src.domain import ProposalState, Role
 from src.repositories import ConflictError
 
@@ -23,21 +25,30 @@ class TransitionEngine:
 
     def move(self, proposal_id, actor, expected_version, target, action):
         with self.proposals.transaction():
-            proposal = self.proposals.get(proposal_id)
-            if proposal.version != expected_version:
+            stored = self.proposals.get(proposal_id)
+            if stored.version != expected_version:
                 raise ConflictError("stale proposal version")
-            if self.allowed.get(proposal.state) != target:
+            if self.allowed.get(stored.state) != target:
                 raise ValidationError("invalid state transition")
             if target in (ProposalState.APPROVED, ProposalState.ERP_UPDATE_REQUESTED):
-                if self.vendors.version(proposal.vendor_id) != proposal.vendor_snapshot:
+                if self.vendors.version(stored.vendor_id) != stored.vendor_snapshot:
                     raise ValidationError("vendor snapshot drift detected")
-            old = proposal.state
-            event = self.audit.record(proposal.id, actor.id, action, old.value, target.value, proposal.last_hash)
-            proposal.state = target
-            proposal.version += 1
-            proposal.last_hash = event.event_hash
-            self.proposals.save(proposal, expected_version)
-            return proposal
+
+            old = stored.state
+            event = self.audit.record(
+                stored.id, actor.id, action, old.value, target.value, stored.last_hash
+            )
+            # Do not mutate the repository's stored object before optimistic
+            # locking. The repository must compare its unchanged version with
+            # expected_version, then atomically replace it with this candidate.
+            candidate = replace(
+                stored,
+                state=target,
+                version=expected_version + 1,
+                last_hash=event.event_hash,
+            )
+            self.proposals.save(candidate, expected_version)
+            return candidate
 
 
 class ProposalService:
@@ -53,7 +64,10 @@ class ProposalService:
         proposal = self.proposals.get(proposal_id)
         if actor.id != proposal.requester_id or actor.role not in (Role.REQUESTER, Role.ADMIN):
             raise AuthorizationError("requester required")
-        return self.engine.move(proposal_id, actor, expected_version, ProposalState.VERIFICATION_PENDING, "SUBMIT")
+        return self.engine.move(
+            proposal_id, actor, expected_version,
+            ProposalState.VERIFICATION_PENDING, "SUBMIT"
+        )
 
 
 class VerificationService:
@@ -64,8 +78,11 @@ class VerificationService:
         proposal = self.proposals.get(proposal_id)
         if actor.role not in (Role.VERIFIER, Role.ADMIN) or actor.id == proposal.requester_id:
             raise AuthorizationError("independent verifier required")
-        proposal.verifier_id = actor.id
-        result = self.engine.move(proposal_id, actor, expected_version, ProposalState.VERIFIED, "VERIFY")
+        result = self.engine.move(
+            proposal_id, actor, expected_version,
+            ProposalState.VERIFIED, "VERIFY"
+        )
+        result.verifier_id = actor.id
         result.verified_snapshot = result.vendor_snapshot
         return result
 
@@ -78,5 +95,9 @@ class ApprovalService:
         proposal = self.proposals.get(proposal_id)
         if actor.role not in (Role.APPROVER, Role.ADMIN) or actor.id in (proposal.requester_id, proposal.verifier_id):
             raise AuthorizationError("separate approver required")
-        proposal.approver_id = actor.id
-        return self.engine.move(proposal_id, actor, expected_version, ProposalState.APPROVED, "APPROVE")
+        result = self.engine.move(
+            proposal_id, actor, expected_version,
+            ProposalState.APPROVED, "APPROVE"
+        )
+        result.approver_id = actor.id
+        return result
