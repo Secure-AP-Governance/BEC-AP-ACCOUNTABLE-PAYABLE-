@@ -5,3 +5,7 @@ Use this file to record approved operational changes. Do not record secrets, acc
 | Date | Change | Risk review | Approver | Validation | Rollback |
 |---|---|---|---|---|---|
 | 2026-09-17 | Established operational governance baseline and CI invariant gate | Required before deployment | Pending formal release approval | Invariant unit tests and CI | Revert commit |
+
+## Governance Check
+
+Documentation-only pull request used to verify required stakeholder review enforcement.
