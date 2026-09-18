@@ -14,10 +14,19 @@ class ValidationError(Exception):
 
 class TransitionEngine:
     allowed = {
-        ProposalState.DRAFT: ProposalState.VERIFICATION_PENDING,
-        ProposalState.VERIFICATION_PENDING: ProposalState.VERIFIED,
-        ProposalState.VERIFIED: ProposalState.APPROVED,
-        ProposalState.APPROVED: ProposalState.ERP_UPDATE_REQUESTED,
+        ProposalState.DRAFT: {ProposalState.VERIFICATION_PENDING},
+        ProposalState.VERIFICATION_PENDING: {
+            ProposalState.EVIDENCE_REQUESTED,
+            ProposalState.REJECTED,
+            ProposalState.VERIFIED,
+        },
+        ProposalState.EVIDENCE_REQUESTED: {ProposalState.VERIFICATION_PENDING},
+        ProposalState.VERIFIED: {
+            ProposalState.APPROVED,
+            ProposalState.ESCALATED,
+            ProposalState.REJECTED,
+        },
+        ProposalState.APPROVED: {ProposalState.ERP_UPDATE_REQUESTED},
     }
 
     def __init__(self, proposals, vendors, audit):
@@ -28,7 +37,7 @@ class TransitionEngine:
             stored = self.proposals.get(proposal_id)
             if stored.version != expected_version:
                 raise ConflictError("stale proposal version")
-            if self.allowed.get(stored.state) != target:
+            if target not in self.allowed.get(stored.state, set()):
                 raise ValidationError("invalid state transition")
             if target in (ProposalState.APPROVED, ProposalState.ERP_UPDATE_REQUESTED):
                 if self.vendors.version(stored.vendor_id) != stored.vendor_snapshot:

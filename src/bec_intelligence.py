@@ -137,7 +137,9 @@ class BECIntelligenceService:
                 f"message-id:{email.message_id}",
                 f"subject:{email.subject}",
                 f"risk-score:{analysis.risk_score}",
+                *(f"risk-factor:{factor}" for factor in analysis.factors),
             ],
+            risk_score=analysis.risk_score,
         )
         created = self.proposal_service.create(proposal)
         event = self.audit.record(
