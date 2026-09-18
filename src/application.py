@@ -4,6 +4,14 @@ from src.bec_intelligence import BECIntelligenceService
 from src.domain import Actor, Proposal
 from src.erp import ERPRequestService
 from src.operations_ui import OperationsView, WorkflowWorklists
+from src.production_readiness import (
+    AlertService,
+    AuthenticatedOperations,
+    AuthService,
+    HealthService,
+    MetricsService,
+)
+from time import time
 from src.repositories import AuditRepository, IdempotencyRepository, ProposalRepository, QuarantineRepository, VendorRepository
 from src.workflow import ApprovalService, ProposalService, TransitionEngine, VerificationService
 
@@ -42,6 +50,20 @@ class Application:
             self.approval,
             self.audit_repo,
         )
+        self.auth = AuthService(time)
+        self.metrics = MetricsService()
+        self.health = HealthService()
+        self.alerts = AlertService()
+        self.authenticated = AuthenticatedOperations(self.auth, self.operations, self.worklists)
+
+    def health_status(self):
+        return self.health.snapshot(self.proposals, self.audit, self.security_status)
+
+    def metrics_snapshot(self):
+        return self.metrics.snapshot(self.proposals, self.quarantine, self.idempotency, self.auth)
+
+    def alert_snapshot(self):
+        return self.alerts.snapshot(self.health_status(), self.metrics_snapshot())
 
     def create(self, proposal: Proposal):
         self.vendors.set_version(proposal.vendor_id, proposal.vendor_snapshot)

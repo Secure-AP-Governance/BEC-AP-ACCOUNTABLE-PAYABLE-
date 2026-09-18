@@ -40,6 +40,8 @@ The v0.3 operations surface currently provides read-only proposal and quarantine
 
 The v0.3 Phase 2 worklist surface adds role-restricted verification and approval queues, evidence and risk detail views, audit linkage, evidence requests, rejection, and escalation. All actions continue through the RC-1 transition engine and preserve requester/verifier/approver separation of duties.
 
+Production readiness has started on `feature/production-readiness` with expiring authenticated sessions, server-side operation authorization, health and metrics snapshots, alert evaluation, recovery documentation, runbooks, and a UAT plan. External SSO/MFA, durable production persistence, monitored deployment integration, restoration evidence, and security review remain release-gate work.
+
 See [SECURITY_INVARIANTS.md](SECURITY_INVARIANTS.md) and [OPERATIONS.md](OPERATIONS.md).
 
 ## Local verification
