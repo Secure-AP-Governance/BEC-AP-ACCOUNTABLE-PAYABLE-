@@ -80,3 +80,19 @@ class IdempotencyRepository:
 
     def put(self, key, value):
         self.values[key] = value
+
+
+class QuarantineRepository:
+    def __init__(self):
+        self.items = {}
+
+    def create(self, record):
+        if record.quarantine_id in self.items:
+            raise ConflictError("quarantine record already exists")
+        self.items[record.quarantine_id] = record
+        return record
+
+    def get(self, quarantine_id):
+        if quarantine_id not in self.items:
+            raise NotFoundError(quarantine_id)
+        return self.items[quarantine_id]
