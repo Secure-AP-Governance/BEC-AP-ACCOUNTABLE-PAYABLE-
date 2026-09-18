@@ -3,6 +3,7 @@ from src.audit import AuditService
 from src.bec_intelligence import BECIntelligenceService
 from src.domain import Actor, Proposal
 from src.erp import ERPRequestService
+from src.operations_ui import OperationsView
 from src.repositories import AuditRepository, IdempotencyRepository, ProposalRepository, QuarantineRepository, VendorRepository
 from src.workflow import ApprovalService, ProposalService, TransitionEngine, VerificationService
 
@@ -27,6 +28,12 @@ class Application:
             self.audit,
             self.proposal,
             self.quarantine,
+        )
+        self.operations = OperationsView(
+            self.proposals,
+            self.quarantine,
+            self.audit_repo,
+            self.security_status,
         )
 
     def create(self, proposal: Proposal):

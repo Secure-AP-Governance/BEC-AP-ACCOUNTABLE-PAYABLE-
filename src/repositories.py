@@ -59,6 +59,10 @@ class AuditRepository:
         with self.lock:
             return list(self.events.get(proposal_id, []))
 
+    def all_events(self):
+        with self.lock:
+            return [event for events in self.events.values() for event in events]
+
 
 class VendorRepository:
     def __init__(self):

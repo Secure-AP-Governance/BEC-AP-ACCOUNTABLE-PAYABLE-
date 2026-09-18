@@ -36,6 +36,8 @@ BEC intelligence is advisory only. An email may create a proposal or quarantine 
 Email -> Proposal / Quarantine -> Verification -> Approval -> ERP Update Request
 ```
 
+The v0.3 operations surface currently provides read-only proposal and quarantine queues, audit exploration, and security-invariant status. It does not grant verification, approval, rejection, escalation, vendor-update, or payment authority.
+
 See [SECURITY_INVARIANTS.md](SECURITY_INVARIANTS.md) and [OPERATIONS.md](OPERATIONS.md).
 
 ## Local verification
