@@ -87,10 +87,6 @@ class VerificationService:
             ProposalState.VERIFIED,
             "VERIFY",
         )
-        # Keep the persisted version and verification metadata in sync.
-        result.verifier_id = actor.id
-        result.verified_snapshot = result.vendor_snapshot
-        self.proposals.save(result, expected_version)
         return result
 
 
@@ -110,6 +106,4 @@ class ApprovalService:
             ProposalState.APPROVED,
             "APPROVE",
         )
-        result.approver_id = actor.id
-        self.proposals.save(result, expected_version)
         return result
