@@ -38,9 +38,6 @@ class TransitionEngine:
             event = self.audit.record(
                 stored.id, actor.id, action, old.value, target.value, stored.last_hash
             )
-            # Do not mutate the repository's stored object before optimistic
-            # locking. The repository must compare its unchanged version with
-            # expected_version, then atomically replace it with this candidate.
             candidate = replace(
                 stored,
                 state=target,
@@ -65,8 +62,11 @@ class ProposalService:
         if actor.id != proposal.requester_id or actor.role not in (Role.REQUESTER, Role.ADMIN):
             raise AuthorizationError("requester required")
         return self.engine.move(
-            proposal_id, actor, expected_version,
-            ProposalState.VERIFICATION_PENDING, "SUBMIT"
+            proposal_id,
+            actor,
+            expected_version,
+            ProposalState.VERIFICATION_PENDING,
+            "SUBMIT",
         )
 
 
@@ -78,12 +78,19 @@ class VerificationService:
         proposal = self.proposals.get(proposal_id)
         if actor.role not in (Role.VERIFIER, Role.ADMIN) or actor.id == proposal.requester_id:
             raise AuthorizationError("independent verifier required")
+        proposal.verifier_id = actor.id
+        proposal.verified_snapshot = proposal.vendor_snapshot
         result = self.engine.move(
-            proposal_id, actor, expected_version,
-            ProposalState.VERIFIED, "VERIFY"
+            proposal_id,
+            actor,
+            expected_version,
+            ProposalState.VERIFIED,
+            "VERIFY",
         )
+        # Keep the persisted version and verification metadata in sync.
         result.verifier_id = actor.id
         result.verified_snapshot = result.vendor_snapshot
+        self.proposals.save(result, expected_version)
         return result
 
 
@@ -95,9 +102,14 @@ class ApprovalService:
         proposal = self.proposals.get(proposal_id)
         if actor.role not in (Role.APPROVER, Role.ADMIN) or actor.id in (proposal.requester_id, proposal.verifier_id):
             raise AuthorizationError("separate approver required")
+        proposal.approver_id = actor.id
         result = self.engine.move(
-            proposal_id, actor, expected_version,
-            ProposalState.APPROVED, "APPROVE"
+            proposal_id,
+            actor,
+            expected_version,
+            ProposalState.APPROVED,
+            "APPROVE",
         )
         result.approver_id = actor.id
+        self.proposals.save(result, expected_version)
         return result
