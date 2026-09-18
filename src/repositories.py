@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from copy import deepcopy
 from threading import RLock
 from src.domain import AuditEvent, Proposal
 
@@ -22,24 +23,27 @@ class ProposalRepository:
             yield
 
     def get(self, proposal_id):
-        if proposal_id not in self.items:
-            raise NotFoundError(proposal_id)
-        return self.items[proposal_id]
+        with self.lock:
+            if proposal_id not in self.items:
+                raise NotFoundError(proposal_id)
+            return deepcopy(self.items[proposal_id])
 
     def create(self, proposal):
         with self.lock:
             if proposal.id in self.items:
                 raise ConflictError("proposal already exists")
-            self.items[proposal.id] = proposal
-            return proposal
+            self.items[proposal.id] = deepcopy(proposal)
+            return deepcopy(proposal)
 
     def save(self, proposal, expected_version):
         with self.lock:
-            current = self.get(proposal.id)
+            current = self.items.get(proposal.id)
+            if current is None:
+                raise NotFoundError(proposal.id)
             if current.version != expected_version:
                 raise ConflictError("stale proposal version")
-            self.items[proposal.id] = proposal
-            return proposal
+            self.items[proposal.id] = deepcopy(proposal)
+            return deepcopy(proposal)
 
 
 class AuditRepository:

@@ -80,6 +80,7 @@ class VerificationService:
             raise AuthorizationError("independent verifier required")
         proposal.verifier_id = actor.id
         proposal.verified_snapshot = proposal.vendor_snapshot
+        self.proposals.save(proposal, expected_version)
         result = self.engine.move(
             proposal_id,
             actor,
@@ -99,6 +100,7 @@ class ApprovalService:
         if actor.role not in (Role.APPROVER, Role.ADMIN) or actor.id in (proposal.requester_id, proposal.verifier_id):
             raise AuthorizationError("separate approver required")
         proposal.approver_id = actor.id
+        self.proposals.save(proposal, expected_version)
         result = self.engine.move(
             proposal_id,
             actor,
