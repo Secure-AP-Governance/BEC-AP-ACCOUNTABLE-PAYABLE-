@@ -7,6 +7,9 @@ on:
 permissions:
   contents: read
 
+env:
+  PYTHONPATH: .
+
 jobs:
   invariants:
     runs-on: ubuntu-latest
@@ -14,8 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Verify locked security invariants
-        run: python scripts/verify_invariants.py
-      - name: Run invariant tests
-        run: python -m unittest discover -s tests -v
+          python-version: "3.12"
+      - run: python scripts/verify_invariants.py
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/security_scan.py

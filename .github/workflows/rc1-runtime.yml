@@ -1,0 +1,31 @@
+name: RC-1 runtime
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  rc1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la
+          python -c "import sys; print(sys.path)"
+      - name: Verify locked invariants
+        run: python scripts/verify_invariants.py
+      - name: Scan forbidden workflow paths
+        run: python scripts/security_scan.py
+      - name: Run workflow tests
+        run: python -m unittest discover -s tests -v
