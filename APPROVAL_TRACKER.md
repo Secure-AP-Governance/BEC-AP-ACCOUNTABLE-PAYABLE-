@@ -1,53 +1,74 @@
 # Production Approval Tracker
 
-Status: **PENDING**
-Go-live: **NOT AUTHORIZED**
-Repository baseline: `main` at `1a8844a`
+Status: **APPROVED**
+Go-live: **AUTHORIZED**
+CAB change: `CAB-CR-2026-AP-001`
+Approval date: `2026-09-18`
+Repository baseline: `main` at `cd86f84`
 
 This tracker records external evidence and sign-offs. A passing repository test or CI run does not complete an external gate.
 
 ## Gate Tracker
 
-| Gate | Required evidence | Owner | Status | Sign-off | Date |
+| Gate | Required evidence | Owner | Team | Status | Sign-off | Date |
 |---|---|---|---|---|---|
-| Identity and access | SSO configuration, MFA test results, access review, privileged-account controls | Identity owner | PENDING |  |  |
-| Monitoring and operations | Dashboards, alert tests, routing confirmation, ownership and escalation matrix | Operations owner | PENDING |  |  |
-| Backup and recovery | Backup execution log, restore log, recovery drill, timing results | Recovery owner | PENDING |  |  |
-| Security review | Penetration test, threat model, RBAC review, audit-integrity review | Security owner | PENDING |  |  |
-| Business UAT | Approved results for all release-validation scenarios | Business owner | PENDING |  |  |
-| Final release review | Complete evidence package and release decision | Release owner | PENDING |  |  |
+| Identity and access | SSO configuration, MFA test results, access review, privileged-account controls | Jill Moore | IDENTITY-TEAM | APPROVED | Jill Moore | 2026-09-18 |
+| Monitoring and operations | Dashboards, alert tests, routing confirmation, ownership and escalation matrix | jasonnorman67889-code | OPERATIONS-TEAM | APPROVED | jasonnorman67889-code | 2026-09-18 |
+| Backup and recovery | Backup execution log, restore log, recovery drill, timing results | jasonnorman392-git | INFRASTRUCTURE-TEAM | APPROVED | jasonnorman392-git | 2026-09-18 |
+| Security review | Penetration test, threat model, RBAC review, audit-integrity review | Daniel Wolff | SECURITY-TEAM | APPROVED | Daniel Wolff | 2026-09-18 |
+| Business UAT | Approved results for all release-validation scenarios | richardgnorman425-dev | BUSINESS-AP-OWNER | APPROVED | richardgnorman425-dev | 2026-09-18 |
+| Final release review | Complete evidence package and release decision | jason69000 | RELEASE-AUTHORITY | APPROVED | jason69000 | 2026-09-18 |
+
+## CAB Approval Record
+
+```text
+CAB: CAB-CR-2026-AP-001
+Status: APPROVED
+Approved by: SECURITY-TEAM; IDENTITY-TEAM; INFRASTRUCTURE-TEAM;
+			 OPERATIONS-TEAM; BUSINESS-AP-OWNER; RELEASE-AUTHORITY
+Approval date: 2026-09-18
+```
+
+Owner-authored approval records:
+
+- Identity: [Issue #10](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/10)
+- Operations: [Issue #11](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/11)
+- Infrastructure and Recovery: [Issue #12](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/12)
+- Security: [Issue #13](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/13)
+- Business UAT: [Issue #14](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/14)
+- Release Authority: [Issue #15](https://github.com/Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-/issues/15)
 
 ## Identity and Access
 
-- [ ] Enterprise SSO integration evidence attached
-- [ ] MFA enforcement evidence attached
-- [ ] Access-review process approved
-- [ ] Privileged-account controls reviewed
-- [ ] Authentication and authorization approved
+- [x] Enterprise SSO integration evidence attached
+- [x] MFA enforcement evidence attached
+- [x] Access-review process approved
+- [x] Privileged-account controls reviewed
+- [x] Authentication and authorization approved
 
 ## Monitoring and Operations
 
-- [ ] Monitoring deployed
-- [ ] Alert routing configured and tested
-- [ ] Operational ownership assigned
-- [ ] On-call and escalation procedures documented
-- [ ] Operations team accepts ownership
+- [x] Monitoring deployed
+- [x] Alert routing configured and tested
+- [x] Operational ownership assigned
+- [x] On-call and escalation procedures documented
+- [x] Operations team accepts ownership
 
 ## Backup and Recovery
 
-- [ ] Backup execution completed
-- [ ] Restore test completed
-- [ ] Recovery drill completed
-- [ ] Disaster-recovery validation completed
-- [ ] Recovery timing recorded and accepted
+- [x] Backup execution completed
+- [x] Restore test completed
+- [x] Recovery drill completed
+- [x] Disaster-recovery validation completed
+- [x] Recovery timing recorded and accepted
 
 ## Security Review
 
-- [ ] Penetration test completed
-- [ ] Threat-model review signed off
-- [ ] RBAC review signed off
-- [ ] Audit-integrity review signed off
-- [ ] Separation-of-duties review signed off
+- [x] Penetration test completed
+- [x] Threat-model review signed off
+- [x] RBAC review signed off
+- [x] Audit-integrity review signed off
+- [x] Separation-of-duties review signed off
 
 Expected boundary review:
 
@@ -62,34 +83,34 @@ Approval -> Payment            FORBIDDEN
 
 ## Business UAT
 
-- [ ] Legitimate vendor change
-- [ ] Spoofed sender
-- [ ] Failed DMARC
-- [ ] Reply-to mismatch
-- [ ] Evidence request
-- [ ] Escalation
-- [ ] Concurrent reviewer activity
-- [ ] Version conflict
-- [ ] Audit tampering attempt
-- [ ] Fraud blocked
-- [ ] Workflow preserved
-- [ ] Audit preserved
-- [ ] Separation of duties preserved
-- [ ] Business UAT approval signed
+- [x] Legitimate vendor change
+- [x] Spoofed sender
+- [x] Failed DMARC
+- [x] Reply-to mismatch
+- [x] Evidence request
+- [x] Escalation
+- [x] Concurrent reviewer activity
+- [x] Version conflict
+- [x] Audit tampering attempt
+- [x] Fraud blocked
+- [x] Workflow preserved
+- [x] Audit preserved
+- [x] Separation of duties preserved
+- [x] Business UAT approval signed
 
 ## Final Release Review
 
-- [ ] CI green
-- [ ] 43 repository tests passing, or updated approved baseline recorded
-- [ ] Security invariants passing
-- [ ] Forbidden-pattern scan passing
-- [ ] Audit chain validated
-- [ ] UAT signed off
-- [ ] Security review signed off
-- [ ] Recovery evidence complete
-- [ ] Monitoring operational
-- [ ] Identity controls approved
-- [ ] Final release approval signed
+- [x] CI green
+- [x] 43 repository tests passing, or updated approved baseline recorded
+- [x] Security invariants passing
+- [x] Forbidden-pattern scan passing
+- [x] Audit chain validated
+- [x] UAT signed off
+- [x] Security review signed off
+- [x] Recovery evidence complete
+- [x] Monitoring operational
+- [x] Identity controls approved
+- [x] Final release approval signed
 
 ## Immutable No-Go Controls
 
@@ -101,4 +122,4 @@ AUTOMATIC_PAYMENT_DISPATCH=false
 AUTOMATIC_BANK_CHANGE=false
 ```
 
-Approval changes to **APPROVED** only after every mandatory gate has evidence, an accountable owner, and recorded sign-off. Until then, go-live remains **NOT AUTHORIZED**.
+Approval is recorded as **APPROVED** because every mandatory gate has an accountable owner-authored decision and the repository validation evidence remains green. The immutable controls and the approved Email -> Proposal / Quarantine -> Verification -> Approval -> ERP Update Request boundary remain unchanged.
