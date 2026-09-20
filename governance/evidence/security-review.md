@@ -1,0 +1,27 @@
+# Security Review
+
+- Change record: CAB-CR-2026-AP-001
+- Repository: Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-
+- Commit SHA: cd86f84536e44f482e920f335b857c2e043cea93
+- Scope reviewed: BEC detection, risk scoring, quarantine, audit logging, secret handling, and release controls.
+- Evidence reviewed:
+  - `config/security_invariants.py`
+  - `scripts/verify_invariants.py`
+  - `scripts/security_scan.py`
+  - `tests/test_security_invariants.py`
+  - `tests/test_bec_intelligence.py`
+- Tests reviewed:
+  - `python -m unittest discover -s tests -v`
+- Findings: The repository contains the required safety invariants and the project test suite is passing. The code blocks automatic payment dispatch and automatic bank changes through invariant enforcement.
+- Exceptions: None documented in this workspace.
+- Reviewer name: PENDING_EXTERNAL_EVIDENCE
+- Reviewer role: Security Team
+- Review date: PENDING_EXTERNAL_EVIDENCE
+- Decision: PENDING_EXTERNAL_EVIDENCE
+- Approval / signature field: PENDING_EXTERNAL_EVIDENCE
+- Evidence references:
+  - `config/security_invariants.py`
+  - `scripts/verify_invariants.py`
+  - `scripts/security_scan.py`
+  - `tests/test_security_invariants.py`
+- Initial decision: PENDING_EXTERNAL_EVIDENCE

@@ -1,0 +1,25 @@
+# Identity Review
+
+- Change record: CAB-CR-2026-AP-001
+- Repository: Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-
+- Commit SHA: cd86f84536e44f482e920f335b857c2e043cea93
+- Scope reviewed: Role separation, independent verification, approval boundaries, and no self-approval behavior.
+- Evidence reviewed:
+  - `src/domain.py`
+  - `src/workflow.py`
+  - `tests/test_runtime.py`
+  - `tests/test_workflow_worklists.py`
+- Tests reviewed:
+  - `python -m unittest discover -s tests -v`
+- Findings: The workflow enforces requester, verifier, and approver separation and rejects self-verification/self-approval paths.
+- Exceptions: None documented in this workspace.
+- Reviewer name: PENDING_EXTERNAL_EVIDENCE
+- Reviewer role: Identity Team
+- Review date: PENDING_EXTERNAL_EVIDENCE
+- Decision: PENDING_EXTERNAL_EVIDENCE
+- Approval / signature field: PENDING_EXTERNAL_EVIDENCE
+- Evidence references:
+  - `src/domain.py`
+  - `src/workflow.py`
+  - `tests/test_runtime.py`
+- Initial decision: PENDING_EXTERNAL_EVIDENCE

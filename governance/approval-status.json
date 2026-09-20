@@ -1,0 +1,19 @@
+{
+  "change_record": "CAB-CR-2026-AP-001",
+  "repository": "Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-",
+  "branch": "main",
+  "approval_pr": 16,
+  "status": "PENDING_FINAL_GOVERNANCE",
+  "financial_execution_enabled": false,
+  "automatic_payment_dispatch": false,
+  "automatic_bank_change": false,
+  "gates": {
+    "security": "PENDING",
+    "identity": "PENDING",
+    "operations": "PENDING",
+    "infrastructure": "PENDING",
+    "business_ap_owner": "PENDING",
+    "release_authority": "PENDING"
+  },
+  "production_release_authorized": false
+}
