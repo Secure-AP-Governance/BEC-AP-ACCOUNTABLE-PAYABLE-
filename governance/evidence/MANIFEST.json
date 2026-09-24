@@ -1,0 +1,54 @@
+{
+  "cab_id": "CAB-CR-2026-AP-001",
+  "repository": "Secure-AP-Governance/BEC-AP-ACCOUNTABLE-PAYABLE-",
+  "baseline_commit": "cd86f84536e44f482e920f335b857c2e043cea93",
+  "approval_pr": 16,
+  "test_result": {
+    "command": "python -m unittest discover -s tests -v",
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0,
+    "status": "PASS"
+  },
+  "financial_safety_controls": {
+    "automatic_bank_change": false,
+    "automatic_payment_dispatch": false,
+    "payment_execution_enabled": false
+  },
+  "production_authorization_state": "NOT_AUTHORIZED",
+  "gates": {
+    "security": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/security-review.md"
+    },
+    "identity": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/identity-review.md"
+    },
+    "operations": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/operations-review.md"
+    },
+    "infrastructure": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/infrastructure-review.md"
+    },
+    "business_ap_owner": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/business-ap-review.md"
+    },
+    "release_authority": {
+      "status": "PENDING_EXTERNAL_EVIDENCE",
+      "evidence_file": "governance/evidence/release-authority-review.md"
+    }
+  },
+  "evidence_files": [
+    "governance/evidence/security-review.md",
+    "governance/evidence/identity-review.md",
+    "governance/evidence/operations-review.md",
+    "governance/evidence/infrastructure-review.md",
+    "governance/evidence/business-ap-review.md",
+    "governance/evidence/release-authority-review.md",
+    "governance/evidence/INDEX.md"
+  ]
+}
